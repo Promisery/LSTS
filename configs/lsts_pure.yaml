@@ -1,0 +1,58 @@
+seed: 42
+
+model:
+  name: lsts
+
+  hparams:
+    input_resolution: &input_resolution 128
+
+loss:
+  - name: negpearson
+    weight: 1.0
+
+optimizer:
+  name: AdamW
+  hparams:
+    lr: 1.0e-4
+  scheduler:
+    name: onecycle
+    hparams:
+      anneal_strategy: cos
+      pct_start: 0.3
+
+trainer:
+  max_epochs: 30
+  callbacks:
+  - LearningRateMonitor
+  - ModelCheckpoint
+
+data:
+  batch_size: 4
+  num_workers: 4
+
+  train_sets:
+  - name: pure
+    split: train
+
+  test_sets:
+  - name: pure
+    split: test
+
+  data_type: &data_type
+    - raw
+  wave_type: &wave_type
+    - normalized
+
+  datasets:
+    pure:
+      name: pure
+      data_root: Path/to/PURE/dataset
+      cache_root: Path/to/cache/directory
+      data_type: *data_type
+      wave_type: *wave_type
+      input_resolution: *input_resolution
+      img_height: *input_resolution
+      img_width: *input_resolution
+  
+  chunk_length: 180
+  chunk_interval: 90

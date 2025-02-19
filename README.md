@@ -1,24 +1,49 @@
 # LSTS: Periodicity Learning via Long Short-term Temporal Shift for Remote Physiological Measurement
 
-This repository is the official implementation of the paper **LSTS: Periodicity Learning via Long Short-term Temporal Shift for Remote Physiological Measurement**. Currently, a demo is provided. The full code will be released after the acceptance of the paper.
+This repository is the official implementation of the paper [**LSTS: Periodicity Learning via Long Short-term Temporal Shift for Remote Physiological Measurement**](https://ieeexplore.ieee.org/abstract/document/10870326/).
 
 ## Dependencies
 ```
-conda create -n lsts python=3.9
-conda activate lsts
-conda install pytorch torchvision pytorch-cuda=12.1 -c pytorch -c nvidia
-conda install pandas scipy einops matplotlib seaborn notebook -c conda-forge
-pip install timm entmax
+conda create -n rppg python=3.9
+conda activate rppg
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+pip install jupyter matplotlib pandas scipy retina-face einops safetensors lightning wandb heartpy seaborn odfpy openpyxl
+pip install timm
+# optional
+pip install notebook
 ```
 
-## Model & Data
+## Train & Validation
 
-The source code of the proposed LSTS model is provided in `models/lsts.py`. The Periodic Channel Shift mechanism is implemented in `PeriodicShift` class. The MPOS and TSAug techniques are implemented in the `preprocess` function of `LSTS` class.
+1. Change **Path/to/XXXX/dataset** and **Path/to/cache/directory** to the actual paths in *preprocess.py*
+2. Run `python preprocess.py`
+3. Change **Path/to/XXXX/dataset** and **Path/to/cache/directory** to the actual paths in the config files in *./configs/*
+4. Run`python ./train.py --config ./configs/lsts_xxxx.yaml --split_idx idx` where `xxxx` is the name of the dataset and `idx` is the split index ranging from 0 to 4.
+5. The training logs are managed using [Weights & Biases](https://wandb.ai/). Visit the website to check the results.
 
-We provide a model trained on the RLAP-rPPG dataset in `weights.pt`, and a sample data in `data.pt`. The data is a publicly available sample data in the RLAP-rPPG dataset, which can be obtained [here](https://github.com/KegangWangCCNU/PhysRecorder/tree/main/Example/v01). Note that the sample data itself is not part of the RLAP dataset.
+## Citation
 
-Scripts for model training and validation will be released after the acceptance of the paper.
+```
+@article{lsts,
+    author={Jiang, Titong and Ma, Yuan and Li, Jiaqi and Dong, Qing and Ji, Xuewu and Liu, Yahui},
+    journal={IEEE Transactions on Circuits and Systems for Video Technology}, 
+    title={LSTS: Periodicity Learning via Long Short-term Temporal Shift for Remote Physiological Measurement}, 
+    year={2025},
+    volume={},
+    number={},
+    pages={1-1},
+    doi={10.1109/TCSVT.2025.3538474}
+}
+```
 
-## Visualization
 
-Please run `main.ipynb` to check the visualized results on the sample data.
+## Credit
+
+This project is heavily dependent on the following projects. If you find them useful, please give them a star.
+
+[rPPG-Toolbox](https://github.com/ubicomplab/rPPG-Toolbox)
+[TPS](https://github.com/MartinXM/TPS)
+[Heartpy](https://github.com/paulvangentcom/heartrate_analysis_python)
+[NeuroKit2](https://github.com/neuropsychology/NeuroKit)
+[PhysBench](https://github.com/KegangWangCCNU/PhysBench/)
+[minGPT](https://github.com/karpathy/minGPT)
