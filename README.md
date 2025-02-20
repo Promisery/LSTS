@@ -6,9 +6,7 @@ This repository is the official implementation of the paper [**LSTS: Periodicity
 ```
 conda create -n rppg python=3.9
 conda activate rppg
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
-pip install jupyter matplotlib pandas scipy retina-face einops safetensors lightning wandb heartpy seaborn odfpy openpyxl
-pip install timm
+pip install -r requirements.txt
 # optional
 pip install notebook
 ```
