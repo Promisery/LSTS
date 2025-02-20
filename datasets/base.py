@@ -199,7 +199,7 @@ class BaseDataset(Dataset):
         waves_clips = [waves[i*self.chunk_interval: i*self.chunk_interval+self.chunk_length] for i in range(clip_num)]
         return frames_clips, waves_clips
     
-    def save(self, frames, waves, subject, record, fold):
+    def save(self, frames, waves, subject, record, split, fold):
         
         frames, waves = self.chunk(frames, waves)
         assert len(frames) == len(waves), 'Frames and waves have different lengths!'
@@ -216,7 +216,7 @@ class BaseDataset(Dataset):
             target = Path(os.path.join(self.data_dir, filename))
             
             torch.save(data, target)
-            splits.append({'filename': filename, 'fold': fold})
+            splits.append({'filename': filename, 'split': split, 'fold': fold})
         return splits
 
     def __len__(self):
