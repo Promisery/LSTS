@@ -21,7 +21,7 @@ optimizer:
       pct_start: 0.3
 
 trainer:
-  max_epochs: 30
+  max_epochs: 20
   callbacks:
   - LearningRateMonitor
   - ModelCheckpoint
